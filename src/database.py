@@ -87,6 +87,39 @@ class DBManager:
             for fila in filas 
         ]
         return proyectos 
+    
+    # Obtener tareas con filtro opcional por estado
+    def obtener_tareas(self, estado = None):
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        sql = "SELECT * FROM tareas"
+        params = []
+
+        if estado:
+            sql += "WHERE estado = estado = ?"
+            params.append(estado)
+    
+        sql += "ORDER BY fecha_limite ASC"
+
+        cursor.execute(sql, params)
+        filas = cursor.fetchall()
+        conn.close()
+    
+        tareas = []
+        for fila in filas:
+            t = Tarea(
+                titulo = fila['titulo'],
+                fecha_limite = fila['fecha_limite'],
+                fecha_creacion = fila['fecha_creacion'],
+                prioridad = fila['prioridad'],
+                proyecto_id = fila['proyecto_id'],
+                estado = fila['estado'],
+                descripcion = fila['descripcion'],
+                id = fila['id'],
+            )
+            tareas.appened(t)
+        return tareas
 
 
 # Inicio del script para pruebas
@@ -112,6 +145,7 @@ if __name__ == '__main__':
 
     tarea_creada = manager.crear_tarea(tarea_prueba)
     print(f"Tarea creada y ID asignado: {tarea_creada.id}")
+
 
 
 
