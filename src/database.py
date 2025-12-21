@@ -81,7 +81,7 @@ class DBManager:
         filas = cursor.fetchall()
         conn.close()
 
-        #
+        
         proyectos = [
             Proyecto(nombre=fila['nombre'], descripcion=fila['descripcion'], id=fila['id'], estado=fila['estado'])
             for fila in filas 
@@ -97,7 +97,7 @@ class DBManager:
         params = []
 
         if estado:
-            sql += "WHERE estado = estado = ?"
+            sql += "WHERE estado = ?"
             params.append(estado)
     
         sql += "ORDER BY fecha_limite ASC"
@@ -118,7 +118,7 @@ class DBManager:
                 descripcion = fila['descripcion'],
                 id = fila['id'],
             )
-            tareas.appened(t)
+            tareas.append(t)
         return tareas
 
 
