@@ -97,10 +97,10 @@ class DBManager:
         params = []
 
         if estado:
-            sql += "WHERE estado = ?"
+            sql += " WHERE estado = ?"
             params.append(estado)
     
-        sql += "ORDER BY fecha_limite ASC"
+        sql += " ORDER BY fecha_limite ASC"
 
         cursor.execute(sql, params)
         filas = cursor.fetchall()
