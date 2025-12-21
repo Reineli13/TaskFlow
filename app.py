@@ -57,6 +57,19 @@ def crear_tarea_web():
     return render_template('formulario_tarea.html', proyectos=proyectos)
 
 
+@app.route('/completar/<int:tarea_id>')
+def completar_tarea(tarea_id):
+    """
+    Ruta que maneja la actualización del estado de la tarea (CRUD Update).
+    <int:tarea_id> es un parámetro dinámico que Flask espera en la URL.
+    """
+    # 1. Llamamos al método UPDATE del DBManager
+    db_manager.actualizar_tarea_estado(tarea_id, "Completada")
+    
+    # 2. Redirigimos al usuario a la página principal para ver el cambio
+    return redirect(url_for('index'))
+
+
 if __name__ == '__main__':
     # Las tablas ya se crean automáticamente en el __init__ de DBManager
 
